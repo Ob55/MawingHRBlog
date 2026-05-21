@@ -1,19 +1,21 @@
 #!/usr/bin/env bash
 # Sets the four GitHub env vars on the Vercel project and triggers a redeploy.
+# Uses `npx vercel` so no global install is needed.
 # Run once after creating your GitHub fine-grained PAT.
 set -euo pipefail
 
 cd "$(dirname "$0")"
 
-if ! command -v vercel >/dev/null 2>&1; then
-  echo "Vercel CLI not found. Install it first:"
-  echo "  npm install -g vercel"
+VERCEL="npx --yes vercel@latest"
+
+if ! command -v npx >/dev/null 2>&1; then
+  echo "npx not found — install Node.js first (https://nodejs.org)."
   exit 1
 fi
 
 if [ ! -f .vercel/project.json ]; then
-  echo "Linking to your Vercel project (one-time)…"
-  vercel link
+  echo "Linking to your Vercel project (one-time — you may be asked to log in)…"
+  $VERCEL link
 fi
 
 echo ""
@@ -33,8 +35,8 @@ add_env() {
   local NAME="$1"
   local VALUE="$2"
   for ENV in production preview development; do
-    vercel env rm "$NAME" "$ENV" --yes >/dev/null 2>&1 || true
-    printf '%s' "$VALUE" | vercel env add "$NAME" "$ENV" >/dev/null
+    $VERCEL env rm "$NAME" "$ENV" --yes >/dev/null 2>&1 || true
+    printf '%s' "$VALUE" | $VERCEL env add "$NAME" "$ENV" >/dev/null
   done
   echo "  set $NAME"
 }
@@ -48,7 +50,7 @@ add_env GITHUB_BRANCH "main"
 
 echo ""
 echo "Redeploying to production…"
-vercel --prod
+$VERCEL --prod
 
 echo ""
 echo "Done. Try uploading again on your admin URL."
