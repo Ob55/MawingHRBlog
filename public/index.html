@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Mawingu HR — Blog Admin</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Montserrat:wght@400;500;600;700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="admin-header">
+    <div class="admin-brand">
+      <span class="brand-mark">M</span>
+      <div>
+        <span class="brand-name">Mawingu HR</span>
+        <span class="brand-sub">Blog admin</span>
+      </div>
+    </div>
+    <div class="admin-actions"></div>
+  </header>
+
+  <!-- ADMIN DASHBOARD -->
+  <main id="dashboard" class="dashboard">
+    <!-- Articles list (shown first) -->
+    <section class="panel" id="listPanel">
+      <header class="panel-head panel-head-row">
+        <div>
+          <h2>Published <span class="serif">articles</span></h2>
+          <p>Articles currently live on the Mawingu HR blog.</p>
+        </div>
+        <button type="button" id="newArticleBtn" class="btn btn-primary">
+          <span aria-hidden="true">+</span>
+          <span>New article</span>
+        </button>
+      </header>
+      <div id="postList" class="post-list">
+        <div class="post-list-loading">Loading articles&hellip;</div>
+      </div>
+    </section>
+
+    <!-- Upload form (revealed when New article clicked) -->
+    <section class="panel" id="formPanel" hidden>
+      <header class="panel-head panel-head-row">
+        <div>
+          <h2>Publish a new <span class="serif">article</span></h2>
+          <p>Fill in the details, format the body, attach a cover image, then publish.</p>
+        </div>
+        <button type="button" id="cancelFormBtn" class="link-muted">Cancel</button>
+      </header>
+
+      <form id="uploadForm" class="upload-form" novalidate>
+        <div class="field-row">
+          <div class="field">
+            <label for="postTitle">Title</label>
+            <input type="text" id="postTitle" name="title" maxlength="160" required placeholder="e.g. The Kenyan labour law audit checklist">
+          </div>
+          <div class="field field-author">
+            <label for="postAuthor">Author</label>
+            <input type="text" id="postAuthor" name="author" maxlength="80" required placeholder="e.g. Sheila Saibala">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="postShort">Short description <span class="hint">(shows on the blog card)</span></label>
+          <textarea id="postShort" name="shortDescription" rows="2" maxlength="280" required placeholder="One or two sentences that preview the article."></textarea>
+          <span class="counter"><span id="shortCount">0</span> / 280</span>
+        </div>
+
+        <div class="field">
+          <label>Full article body <span class="hint">(formatting tools below, shown when readers click Show more)</span></label>
+          <div id="editorToolbar">
+            <span class="ql-formats">
+              <select class="ql-header">
+                <option value="2">Heading</option>
+                <option value="3">Subheading</option>
+                <option value="" selected>Normal text</option>
+              </select>
+              <select class="ql-size">
+                <option value="small">Small</option>
+                <option selected>Normal</option>
+                <option value="large">Large</option>
+                <option value="huge">Huge</option>
+              </select>
+            </span>
+            <span class="ql-formats">
+              <button class="ql-bold" title="Bold"></button>
+              <button class="ql-italic" title="Italic"></button>
+              <button class="ql-underline" title="Underline"></button>
+              <button class="ql-strike" title="Strikethrough"></button>
+            </span>
+            <span class="ql-formats">
+              <select class="ql-color" title="Text color"></select>
+              <select class="ql-background" title="Highlight"></select>
+            </span>
+            <span class="ql-formats">
+              <button class="ql-align" value="" title="Align left"></button>
+              <button class="ql-align" value="center" title="Align center"></button>
+              <button class="ql-align" value="right" title="Align right"></button>
+              <button class="ql-align" value="justify" title="Justify"></button>
+            </span>
+            <span class="ql-formats">
+              <button class="ql-list" value="ordered" title="Numbered list"></button>
+              <button class="ql-list" value="bullet" title="Bulleted list"></button>
+              <button class="ql-blockquote" title="Quote"></button>
+            </span>
+            <span class="ql-formats">
+              <button class="ql-link" title="Link"></button>
+              <button class="ql-clean" title="Clear formatting"></button>
+            </span>
+          </div>
+          <div id="editor"></div>
+        </div>
+
+        <div class="field">
+          <label for="postImage">Cover image <span class="hint">(JPG / PNG / WEBP, max 5MB)</span></label>
+          <input type="file" id="postImage" name="image" accept="image/jpeg,image/png,image/webp" required>
+          <div id="imagePreview" class="image-preview" hidden>
+            <img id="imagePreviewImg" alt="Preview">
+            <button type="button" id="imageClear" class="link-muted">Remove image</button>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" id="publishBtn" class="btn btn-primary">
+            <span class="label">Publish article</span>
+          </button>
+          <span id="uploadStatus" class="upload-status"></span>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="admin-footer">
+    <span>Mawingu HR Solutions &middot; Blog admin</span>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

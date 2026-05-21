@@ -1,0 +1,12 @@
+{
+  "name": "mawingu-hr-blog-admin",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Admin upload page + API for the Mawingu HR Solutions blog. Deployed on Vercel; blog posts stored as JSON in this same repo via the GitHub API.",
+  "scripts": {
+    "dev": "node dev.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
