@@ -21,15 +21,20 @@
   const publishBtn = $('publishBtn');
   const uploadStatus = $('uploadStatus');
   const postList = $('postList');
+  const pendingPanel = $('pendingPanel');
+  const pendingList = $('pendingList');
+  const formHeading = $('formHeading');
+  const formSubhead = $('formSubhead');
 
   let quill = null;
+  let postsCache = [];   // full published posts (so Edit can prefill the form)
+  let editingId = null;  // null = creating, otherwise editing this post id
 
   // -------- Dashboard flow: list ↔ form --------
   function showForm() {
     listPanel.hidden = true;
+    if (pendingPanel) pendingPanel.hidden = true;
     formPanel.hidden = false;
-    const lastAuthor = localStorage.getItem(AUTHOR_KEY);
-    if (lastAuthor && !postAuthor.value) postAuthor.value = lastAuthor;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -37,10 +42,24 @@
     formPanel.hidden = true;
     listPanel.hidden = false;
     resetForm();
+    loadPending();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  newArticleBtn.addEventListener('click', showForm);
+  // Open the form in "create" mode.
+  function startCreate() {
+    editingId = null;
+    resetForm();
+    if (formHeading) formHeading.innerHTML = 'Publish a new <span class="serif">article</span>';
+    if (formSubhead) formSubhead.textContent = 'Fill in the details, format the body, attach a cover image, then publish.';
+    publishBtn.querySelector('.label').textContent = 'Publish article';
+    postImage.required = true;
+    const lastAuthor = localStorage.getItem(AUTHOR_KEY);
+    if (lastAuthor) postAuthor.value = lastAuthor;
+    showForm();
+  }
+
+  newArticleBtn.addEventListener('click', startCreate);
   cancelFormBtn.addEventListener('click', showList);
 
   // -------- Quill rich text editor --------
@@ -164,11 +183,13 @@
   }
 
   function resetForm() {
+    editingId = null;
     uploadForm.reset();
     if (quill) quill.setContents([]);
     imagePreview.hidden = true;
     imagePreviewImg.src = '';
     shortCount.textContent = '0';
+    postImage.required = true;
     setStatus('');
   }
 
@@ -181,11 +202,12 @@
     });
   }
 
-  // -------- Upload --------
+  // -------- Create / edit submit --------
   uploadForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     setStatus('');
 
+    const isEdit = !!editingId;
     const title = postTitle.value.trim();
     const author = postAuthor.value.trim();
     const shortDescription = postShort.value.trim();
@@ -193,39 +215,51 @@
     const bodyText = quill ? quill.getText().trim() : '';
     const file = postImage.files && postImage.files[0];
 
-    if (!title || !author || !shortDescription || !bodyText || !file) {
-      toast({ kind: 'error', title: 'Missing fields', message: 'All fields are required, including the cover image.' });
+    // Image is required when creating, optional when editing (keeps the current one).
+    if (!title || !author || !shortDescription || !bodyText || (!isEdit && !file)) {
+      toast({ kind: 'error', title: 'Missing fields', message: isEdit ? 'Title, author, description and body are all required.' : 'All fields are required, including the cover image.' });
       return;
     }
 
     publishBtn.disabled = true;
-    setStatus('Publishing…');
+    setStatus(isEdit ? 'Saving…' : 'Publishing…');
 
     try {
-      const imageBase64 = await fileToBase64(file);
+      const payload = { title, author, shortDescription, body: bodyHtml };
+      if (file) {
+        payload.imageBase64 = await fileToBase64(file);
+        payload.imageName = file.name;
+        payload.imageType = file.type;
+      }
 
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title,
-          author,
-          shortDescription,
-          body: bodyHtml,
-          imageName: file.name,
-          imageType: file.type,
-          imageBase64
-        })
-      });
+      let res;
+      if (isEdit) {
+        payload.id = editingId;
+        res = await fetch('/api/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      } else {
+        res = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      }
 
       if (!res.ok) {
         const errText = await res.text().catch(() => '');
-        throw new Error(errText || 'Upload failed');
+        throw new Error(errText || (isEdit ? 'Save failed' : 'Upload failed'));
       }
 
       localStorage.setItem(AUTHOR_KEY, author);
       setStatus('');
-      toast({ kind: 'success', title: 'Published', message: `"${title}" is now live on the blog.` });
+      toast({
+        kind: 'success',
+        title: isEdit ? 'Changes saved' : 'Published',
+        message: isEdit ? `"${title}" was updated.` : `"${title}" is now live on the blog.`
+      });
       setTimeout(() => {
         showList();
         loadPosts();
@@ -233,7 +267,7 @@
     } catch (err) {
       console.error(err);
       setStatus('');
-      toast({ kind: 'error', title: 'Upload failed', message: err.message || 'Please try again.' });
+      toast({ kind: 'error', title: isEdit ? 'Save failed' : 'Upload failed', message: err.message || 'Please try again.' });
     } finally {
       publishBtn.disabled = false;
     }
@@ -264,6 +298,7 @@
   }
 
   function renderPosts(posts) {
+    postsCache = posts || [];
     if (!posts.length) {
       postList.innerHTML = '<div class="post-list-empty">No articles published yet. Click <strong>New article</strong> to publish the first one.</div>';
       return;
@@ -281,7 +316,10 @@
               ${p.author ? `<span class="by">by ${escapeHtml(p.author)}</span>` : ''}
             </div>
           </div>
-          <button type="button" class="btn btn-danger" data-action="delete">Delete</button>
+          <div class="post-row-actions">
+            <button type="button" class="btn btn-ghost" data-action="edit">Edit</button>
+            <button type="button" class="btn btn-danger" data-action="delete">Delete</button>
+          </div>
         </div>
       `;
     }).join('');
@@ -289,10 +327,44 @@
     postList.querySelectorAll('[data-action="delete"]').forEach((btn) => {
       btn.addEventListener('click', () => {
         const row = btn.closest('.post-row');
-        const id = row.getAttribute('data-id');
-        deletePost(id, row);
+        deletePost(row.getAttribute('data-id'), row);
       });
     });
+    postList.querySelectorAll('[data-action="edit"]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const row = btn.closest('.post-row');
+        startEdit(row.getAttribute('data-id'));
+      });
+    });
+  }
+
+  // -------- Edit an existing post --------
+  function startEdit(id) {
+    const post = postsCache.find((p) => p.id === id);
+    if (!post) {
+      toast({ kind: 'error', title: 'Could not open editor', message: 'Post not found — try refreshing.' });
+      return;
+    }
+    editingId = id;
+    postTitle.value = post.title || '';
+    postAuthor.value = post.author || '';
+    postShort.value = post.shortDescription || '';
+    shortCount.textContent = String(postShort.value.length);
+    if (quill) quill.root.innerHTML = post.body || '';
+
+    // Keep the current cover image unless a new one is chosen.
+    postImage.required = false;
+    if (post.image) {
+      imagePreviewImg.src = post.image;
+      imagePreview.hidden = false;
+    } else {
+      imagePreview.hidden = true;
+    }
+
+    if (formHeading) formHeading.innerHTML = 'Edit <span class="serif">article</span>';
+    if (formSubhead) formSubhead.textContent = 'Update the details. Leave the image empty to keep the current cover.';
+    publishBtn.querySelector('.label').textContent = 'Save changes';
+    showForm();
   }
 
   async function deletePost(id, row) {
@@ -321,6 +393,93 @@
     }
   }
 
+  // -------- Pending approval (auto-generated drafts) --------
+  async function loadPending() {
+    if (!pendingPanel) return;
+    try {
+      const res = await fetch('/api/pending', { cache: 'no-store' });
+      if (!res.ok) throw new Error('Failed to load drafts');
+      const data = await res.json();
+      renderPending(Array.isArray(data.pending) ? data.pending : []);
+    } catch (err) {
+      console.warn('Pending API unavailable.', err);
+      renderPending([]);
+    }
+  }
+
+  function renderPending(drafts) {
+    if (!drafts.length) {
+      pendingPanel.hidden = true;
+      pendingList.innerHTML = '';
+      return;
+    }
+    pendingPanel.hidden = false;
+    pendingList.innerHTML = drafts.map((d) => {
+      const dt = formatDateTime(d.draftedAt);
+      const img = d.image ? `<img src="${escapeAttr(d.image)}" alt="">` : '';
+      return `
+        <div class="post-row pending" data-id="${escapeAttr(d.id)}">
+          <div class="post-row-thumb">${img}</div>
+          <div class="post-row-body">
+            <p class="post-row-title">${escapeHtml(d.title || 'Untitled')} <span class="pending-badge">Draft</span></p>
+            <p class="post-row-desc">${escapeHtml(d.shortDescription || '')}</p>
+            <div class="post-row-meta">
+              ${dt ? `<span>drafted ${escapeHtml(dt)}</span>` : ''}
+              ${d.author ? `<span class="by">by ${escapeHtml(d.author)}</span>` : ''}
+            </div>
+          </div>
+          <div class="post-row-actions">
+            <button type="button" class="btn btn-primary" data-action="approve" data-url="${escapeAttr(d.approveUrl)}">Approve</button>
+            <button type="button" class="btn btn-danger" data-action="reject" data-url="${escapeAttr(d.rejectUrl)}">Reject</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    pendingList.querySelectorAll('[data-action="approve"]').forEach((btn) => {
+      btn.addEventListener('click', () => approveDraft(btn));
+    });
+    pendingList.querySelectorAll('[data-action="reject"]').forEach((btn) => {
+      btn.addEventListener('click', () => rejectDraft(btn));
+    });
+  }
+
+  async function approveDraft(btn) {
+    const row = btn.closest('.post-row');
+    const title = row.querySelector('.post-row-title')?.textContent?.replace('Draft', '').trim() || 'this draft';
+    btn.disabled = true;
+    try {
+      const res = await fetch(btn.getAttribute('data-url'));
+      if (!res.ok) throw new Error('Approve failed');
+      toast({ kind: 'success', title: 'Published', message: `"${title}" is now live on the blog.` });
+      loadPending();
+      loadPosts();
+    } catch (err) {
+      btn.disabled = false;
+      toast({ kind: 'error', title: 'Approve failed', message: 'Could not publish the draft. Please try again.' });
+    }
+  }
+
+  async function rejectDraft(btn) {
+    const row = btn.closest('.post-row');
+    const title = row.querySelector('.post-row-title')?.textContent?.replace('Draft', '').trim() || 'this draft';
+    const ok = await openConfirm({
+      title: 'Reject this draft?',
+      body: `"${title}" will be discarded along with its image and will not be published.`,
+      okLabel: 'Reject'
+    });
+    if (!ok) return;
+    try {
+      const res = await fetch(btn.getAttribute('data-url'));
+      if (!res.ok) throw new Error('Reject failed');
+      row.remove();
+      if (!pendingList.querySelector('.post-row')) pendingPanel.hidden = true;
+      toast({ kind: 'success', title: 'Draft rejected', message: `"${title}" was discarded.` });
+    } catch (err) {
+      toast({ kind: 'error', title: 'Reject failed', message: 'Could not reject the draft. Please try again.' });
+    }
+  }
+
   function escapeHtml(str) {
     return String(str || '').replace(/[&<>"']/g, (c) => ({
       '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
@@ -331,4 +490,5 @@
   // Initialise on load.
   initEditor();
   loadPosts();
+  loadPending();
 })();

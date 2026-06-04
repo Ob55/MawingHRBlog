@@ -26,6 +26,17 @@
 
   <!-- ADMIN DASHBOARD -->
   <main id="dashboard" class="dashboard">
+    <!-- Pending approval (auto-generated drafts) — only shown when there are any -->
+    <section class="panel" id="pendingPanel" hidden>
+      <header class="panel-head">
+        <div>
+          <h2>Pending <span class="serif">approval</span></h2>
+          <p>Auto-generated drafts waiting for your decision. <strong>Approve</strong> publishes to the blog; <strong>Reject</strong> discards the draft.</p>
+        </div>
+      </header>
+      <div id="pendingList" class="post-list"></div>
+    </section>
+
     <!-- Articles list (shown first) -->
     <section class="panel" id="listPanel">
       <header class="panel-head panel-head-row">
@@ -47,8 +58,8 @@
     <section class="panel" id="formPanel" hidden>
       <header class="panel-head panel-head-row">
         <div>
-          <h2>Publish a new <span class="serif">article</span></h2>
-          <p>Fill in the details, format the body, attach a cover image, then publish.</p>
+          <h2 id="formHeading">Publish a new <span class="serif">article</span></h2>
+          <p id="formSubhead">Fill in the details, format the body, attach a cover image, then publish.</p>
         </div>
         <button type="button" id="cancelFormBtn" class="link-muted">Cancel</button>
       </header>

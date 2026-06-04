@@ -1,6 +1,6 @@
 # Mawingu HR — Blog admin
 
-A static admin page (deployed to Vercel) that lets the Mawingu HR team publish and remove blog articles. The Mawingu HR Solutions main website fetches those articles from `/api/posts` and renders them on the public blog.
+A static admin page (deployed to Vercel) that lets the Mawingu HR team publish, **edit** and remove blog articles, and **approve or reject** the auto-generated weekly drafts (the same drafts that arrive by email). The Mawingu HR Solutions main website fetches the live articles from `/api/posts` and renders them on the public blog.
 
 There is no database. Each article is stored as a JSON file inside this repository's `/posts/` folder, with its cover image inside `/posts/images/`. The Vercel serverless functions use the GitHub Contents API to read and write those files.
 
@@ -175,11 +175,13 @@ public/
   app.js          admin UI logic (Quill editor, upload, delete)
   styles.css
 api/
-  posts.js        GET  list posts
+  posts.js        GET  list live posts
+  pending.js      GET  list hidden drafts awaiting approval (+ signed links)
   upload.js       POST create a post + image (commits to GitHub) — used by the admin UI
-  draft.js        POST stage a HIDDEN draft + email an approve/reject link
-  approve.js      GET  publish a staged draft (opened from the email)
-  reject.js       GET  discard a staged draft + image (opened from the email)
+  update.js       POST edit an existing post (and optionally replace its image)
+  draft.js        POST stage a HIDDEN draft + return approve/reject links
+  approve.js      GET  publish a staged draft (from the email OR the dashboard)
+  reject.js       GET  discard a staged draft + image (from the email OR the dashboard)
   delete.js       POST remove a post + image (deletes from GitHub)
   _github.js      shared GitHub Contents API helper
   _token.js       signs/verifies approve/reject links
