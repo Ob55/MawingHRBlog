@@ -1,0 +1,56 @@
+name: Weekly blog post
+
+# Publishes one new article from automation/articles.js each week.
+on:
+  schedule:
+    # Mondays at 08:00 UTC (11:00 EAT). Adjust the cron if you prefer another time.
+    - cron: '0 8 * * 1'
+  # Lets you trigger a publish on demand from the Actions tab ("Run workflow").
+  workflow_dispatch:
+
+# Needed so the job can commit the updated published-log.json back to the repo.
+permissions:
+  contents: write
+
+concurrency:
+  group: weekly-blog
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Draft the next article and email it for approval
+        env:
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          MAIL_HOST: ${{ secrets.MAIL_HOST }}
+          MAIL_PORT: ${{ secrets.MAIL_PORT }}
+          MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+          MAIL_FROM_ADDRESS: ${{ secrets.MAIL_FROM_ADDRESS }}
+          MAIL_FROM_NAME: ${{ secrets.MAIL_FROM_NAME }}
+          APPROVAL_EMAIL_TO: ${{ secrets.APPROVAL_EMAIL_TO }}
+        run: node automation/publish-weekly.js
+
+      - name: Commit updated publish log
+        run: |
+          if git diff --quiet -- automation/published-log.json; then
+            echo "No log change to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add automation/published-log.json
+          git commit -m "chore: record weekly auto-published article"
+          # The /api/upload call just committed the post via the GitHub API, so
+          # rebase onto that before pushing to avoid a non-fast-forward error.
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+          git push
