@@ -1,11 +1,12 @@
-name: Weekly blog post
+name: Blog post (Mon & Thu)
 
-# Publishes one new article from automation/articles.js each week.
+# Drafts one new article from automation/articles.js and emails it for approval,
+# twice a week (Monday and Thursday).
 on:
   schedule:
-    # Mondays at 08:00 UTC (11:00 EAT). Adjust the cron if you prefer another time.
-    - cron: '0 8 * * 1'
-  # Lets you trigger a publish on demand from the Actions tab ("Run workflow").
+    # Mondays and Thursdays at 08:00 UTC (11:00 EAT). Day-of-week: 1=Mon, 4=Thu.
+    - cron: '0 8 * * 1,4'
+  # Lets you trigger a draft on demand from the Actions tab ("Run workflow").
   workflow_dispatch:
 
 # Needed so the job can commit the updated published-log.json back to the repo.
