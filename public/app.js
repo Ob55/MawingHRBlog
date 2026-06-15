@@ -430,6 +430,7 @@
           </div>
           <div class="post-row-actions">
             <button type="button" class="btn btn-primary" data-action="approve" data-url="${escapeAttr(d.approveUrl)}">Approve</button>
+            <button type="button" class="btn btn-ghost" data-action="regenerate" data-url="${escapeAttr(d.regenerateUrl)}">Regenerate</button>
             <button type="button" class="btn btn-danger" data-action="reject" data-url="${escapeAttr(d.rejectUrl)}">Reject</button>
           </div>
         </div>
@@ -441,6 +442,9 @@
     });
     pendingList.querySelectorAll('[data-action="reject"]').forEach((btn) => {
       btn.addEventListener('click', () => rejectDraft(btn));
+    });
+    pendingList.querySelectorAll('[data-action="regenerate"]').forEach((btn) => {
+      btn.addEventListener('click', () => regenerateDraft(btn));
     });
   }
 
@@ -477,6 +481,29 @@
       toast({ kind: 'success', title: 'Draft rejected', message: `"${title}" was discarded.` });
     } catch (err) {
       toast({ kind: 'error', title: 'Reject failed', message: 'Could not reject the draft. Please try again.' });
+    }
+  }
+
+  async function regenerateDraft(btn) {
+    const row = btn.closest('.post-row');
+    const title = row.querySelector('.post-row-title')?.textContent?.replace('Draft', '').trim() || 'this draft';
+    const ok = await openConfirm({
+      title: 'Regenerate this draft?',
+      body: `"${title}" will be discarded and a different article will be generated and emailed for approval. The new one usually arrives within a minute or two.`,
+      okLabel: 'Regenerate'
+    });
+    if (!ok) return;
+    btn.disabled = true;
+    try {
+      const res = await fetch(btn.getAttribute('data-url'));
+      if (!res.ok) throw new Error('Regenerate failed');
+      row.remove();
+      if (!pendingList.querySelector('.post-row')) pendingPanel.hidden = true;
+      toast({ kind: 'success', title: 'Generating a new article', message: 'A different article is being prepared and will be emailed for approval shortly.' });
+      setTimeout(loadPending, 90000); // refresh after the new draft has likely arrived
+    } catch (err) {
+      btn.disabled = false;
+      toast({ kind: 'error', title: 'Regenerate failed', message: 'Could not start a new draft. Please try again.' });
     }
   }
 

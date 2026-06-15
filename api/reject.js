@@ -4,6 +4,7 @@
 
 const { getFile, deleteFile, setCors } = require('./_github');
 const { verifyToken } = require('./_token');
+const { logEvent } = require('./_events');
 
 function page(title, message, accent) {
   return `<!doctype html><html><head><meta charset="utf-8">
@@ -36,8 +37,10 @@ module.exports = async (req, res) => {
 
     // Remove the staged image too, so rejected drafts leave nothing behind.
     let imagePath = null;
+    let draftTitle = '';
     try {
       const draft = JSON.parse(Buffer.from(meta.content, 'base64').toString('utf8'));
+      draftTitle = draft.title || '';
       const match = (draft.image || '').match(/posts\/images\/[^?#]+$/);
       if (match) imagePath = match[0];
     } catch (_) {}
@@ -49,6 +52,8 @@ module.exports = async (req, res) => {
         await deleteFile(imagePath, `Remove image for rejected draft ${id}`, imgMeta.sha);
       }
     }
+
+    await logEvent('rejected', { id, title: draftTitle });
 
     return res.status(200).send(page('Draft rejected', 'The article has been discarded and will not be published. Next week the automation will offer the next topic.', '🗑️'));
   } catch (err) {

@@ -248,7 +248,12 @@ async function main() {
 
   // 5. Email the approver the Approve / Reject links over SMTP.
   console.log('Sending approval email over SMTP ...');
-  const { to } = await sendApprovalEmail(result.draft, result.approveUrl, result.rejectUrl);
+  const { to } = await sendApprovalEmail(
+    result.draft,
+    result.approveUrl,
+    result.rejectUrl,
+    result.regenerateUrl
+  );
 
   // 6. Record it so the same article is never offered twice. It is NOT live yet —
   //    it goes live only when the approval link in the email is opened.

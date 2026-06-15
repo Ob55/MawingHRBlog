@@ -5,6 +5,11 @@
 
 const { getFile, putFile, deleteFile, setCors } = require('./_github');
 const { verifyToken } = require('./_token');
+const { logEvent } = require('./_events');
+const { sendPublishedEmail } = require('./_mail');
+
+const NOTIFY_TO = process.env.PUBLISH_NOTIFY_TO || 'admin@mawinguhrsolutions.co.ke';
+const SITE_BLOG_URL = process.env.SITE_BLOG_URL || 'https://www.mawinguhrsolutions.co.ke/blog';
 
 function page(title, message, accent) {
   return `<!doctype html><html><head><meta charset="utf-8">
@@ -56,6 +61,15 @@ module.exports = async (req, res) => {
 
     await putFile(`posts/${id}.json`, postBase64, `Publish (approved): ${draft.title}`);
     await deleteFile(pendingPath, `Remove pending draft after approval: ${id}`, meta.sha);
+
+    // Record the activity and notify the admin that a new blog is live.
+    // Both are best-effort: a mail/log failure must not undo the publish.
+    await logEvent('approved', { id, title: draft.title });
+    try {
+      await sendPublishedEmail(post, NOTIFY_TO, SITE_BLOG_URL);
+    } catch (mailErr) {
+      console.error('Published-notification email failed (non-fatal):', mailErr.message);
+    }
 
     return res.status(200).send(page('Published! 🎉', `"${draft.title}" is now live on the Mawingu HR blog. It will appear within about 30 seconds.`, '✅'));
   } catch (err) {

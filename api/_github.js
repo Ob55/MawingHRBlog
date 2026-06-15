@@ -81,10 +81,26 @@ function rawUrl(filePath) {
   return `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${filePath}`;
 }
 
+// Triggers a GitHub Actions workflow_dispatch run (used by /api/regenerate to
+// kick off a fresh draft immediately). Requires the token to have Actions:write.
+async function dispatchWorkflow(workflowFile, ref) {
+  const url = `${API}/actions/workflows/${encodeURIComponent(workflowFile)}/dispatches`;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { ...authHeaders(), 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ref: ref || BRANCH }),
+  });
+  if (!res.ok && res.status !== 204) {
+    const text = await res.text();
+    throw new Error(`GitHub dispatchWorkflow ${workflowFile} (${res.status}): ${text}`);
+  }
+  return true;
+}
+
 function setCors(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
-module.exports = { getFile, putFile, deleteFile, listDir, rawUrl, setCors, OWNER, REPO, BRANCH };
+module.exports = { getFile, putFile, deleteFile, listDir, rawUrl, dispatchWorkflow, setCors, OWNER, REPO, BRANCH };

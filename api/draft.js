@@ -12,6 +12,7 @@
 
 const { putFile, rawUrl, setCors } = require('./_github');
 const { makeToken } = require('./_token');
+const { logEvent } = require('./_events');
 
 function slugify(s) {
   return String(s || '')
@@ -82,13 +83,16 @@ module.exports = async (req, res) => {
     const draftBase64 = Buffer.from(JSON.stringify(draft, null, 2), 'utf8').toString('base64');
     await putFile(`posts/pending/${id}.json`, draftBase64, `Stage draft for approval: ${title}`);
 
-    // 3. Build signed approve / reject links for the caller to email.
+    // 3. Build signed approve / reject / regenerate links for the caller to email.
     const token = makeToken(id);
     const base = baseUrl(req);
     const approveUrl = `${base}/api/approve?id=${encodeURIComponent(id)}&token=${token}`;
     const rejectUrl = `${base}/api/reject?id=${encodeURIComponent(id)}&token=${token}`;
+    const regenerateUrl = `${base}/api/regenerate?id=${encodeURIComponent(id)}&token=${token}`;
 
-    return res.status(200).json({ ok: true, id, draft, approveUrl, rejectUrl });
+    await logEvent('drafted', { id, title });
+
+    return res.status(200).json({ ok: true, id, draft, approveUrl, rejectUrl, regenerateUrl });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: 'Draft failed', detail: err.message });

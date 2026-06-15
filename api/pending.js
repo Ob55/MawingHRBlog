@@ -32,6 +32,7 @@ module.exports = async (req, res) => {
         const token = makeToken(draft.id);
         draft.approveUrl = `${base}/api/approve?id=${encodeURIComponent(draft.id)}&token=${token}`;
         draft.rejectUrl = `${base}/api/reject?id=${encodeURIComponent(draft.id)}&token=${token}`;
+        draft.regenerateUrl = `${base}/api/regenerate?id=${encodeURIComponent(draft.id)}&token=${token}`;
         pending.push(draft);
       } catch (err) {
         console.error('Bad draft JSON', f.name, err);
