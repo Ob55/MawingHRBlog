@@ -755,6 +755,255 @@ const articles = [
 <p>You do not need a formal programme or elaborate targets. Start with fairness in the everyday decisions — hiring, pay, opportunity, how people are treated — and build from there. Done honestly, inclusion is simply good management: getting the best from everyone you employ.</p>
 `.trim(),
   },
+
+  {
+    title: 'Managing Overtime, Rest Days and Public Holidays Fairly',
+    author: AUTHOR,
+    imageQuery: 'employee working late office clock',
+    shortDescription:
+      'Working hours, rest days and overtime are among the most common sources of quiet payroll disputes. A plain guide to getting hours, rest and holiday pay right under Kenyan law.',
+    body: `
+<p>Few things sour a working relationship faster than an argument over hours and pay. An employee who feels they worked extra and were not properly compensated rarely says so out loud — they simply lose trust and, eventually, leave. Getting working hours, rest days and holiday pay right is both a legal obligation and a quiet act of fairness.</p>
+<h2>Normal hours and rest</h2>
+<p>The Employment Act frames normal working hours and provides that employees are entitled to at least one rest day in each period of seven days. Your contracts and handbook should state clearly what an employee's normal hours are and which day is their rest day, so there is no ambiguity to argue over later.</p>
+<h2>Overtime</h2>
+<p>Work beyond normal hours generally attracts overtime, and work on a rest day or public holiday is treated more generously still. Rather than memorising rates that can change, put a simple rule in writing: how overtime is authorised, how it is recorded, and how it is paid. The recurring dispute is almost never the rate itself — it is that nobody agreed in advance whether the extra work was authorised.</p>
+<blockquote>Most overtime disputes are not about the rate. They are about the fact that no one agreed, in writing and in advance, that the extra hours would be worked and paid.</blockquote>
+<h2>Public holidays</h2>
+<p>Employees are entitled to the gazetted public holidays. If the nature of your business means people must work on a public holiday, recognise it properly through enhanced pay or time off in lieu, according to what applies. Decide your approach, write it down, and apply it consistently.</p>
+<h2>Record hours honestly</h2>
+<p>You cannot pay overtime fairly if you do not track hours. A simple, agreed system — even a shared timesheet — protects both sides: the employee is paid for what they actually worked, and the business is protected from inflated claims. Keep these records with your payroll files.</p>
+<h2>Agree the rules once, apply them always</h2>
+<p>The lasting fix is to settle your approach to hours, overtime and holidays once, communicate it plainly, and then apply it the same way for everyone. Predictability here removes an entire category of friction — and signals that you take people's time, and their pay, seriously.</p>
+`.trim(),
+  },
+
+  {
+    title: 'Reference Checks and Background Verification: Doing It Right',
+    author: AUTHOR,
+    imageQuery: 'phone call office professional desk',
+    shortDescription:
+      'A reference check takes twenty minutes and can save you months of pain. How to verify a candidate properly, lawfully and without wasting the effort.',
+    body: `
+<p>You have interviewed a promising candidate and you are ready to make an offer. The temptation is to skip the last, unglamorous step — checking references — because you have already made up your mind. Resist it. A short reference check is one of the cheapest forms of insurance a small business can buy against a costly hiring mistake.</p>
+<h2>Why bother</h2>
+<p>Interviews reveal how someone presents themselves; references reveal how they actually worked. Verifying employment history and speaking to a past manager confirms that the person is who they say they are, did what they claim, and left on reasonable terms. It is far easier to catch a problem now than to manage it after they have started.</p>
+<h2>What to verify</h2>
+<ul>
+  <li><strong>Employment facts</strong> — the roles, dates and responsibilities the candidate stated.</li>
+  <li><strong>Qualifications</strong> — where a certificate or licence is genuinely required for the role.</li>
+  <li><strong>Performance and conduct</strong> — a former manager's honest view of how they worked and why they left.</li>
+</ul>
+<blockquote>A reference check rarely changes a good decision — but every so often it stops a bad one, and that is the whole point.</blockquote>
+<h2>Ask useful questions</h2>
+<p>Move past "would you rehire them?" Ask what the person was responsible for, what they did well, where they needed support, and how they handled pressure or conflict. Open questions get you far more than yes/no ones, and a slight hesitation often tells you as much as the words.</p>
+<h2>Keep it fair and lawful</h2>
+<p>Get the candidate's consent before contacting referees, and stick to job-related matters. Handle whatever you learn confidentially and use it only to inform the hiring decision. Treat every candidate's information as sensitive personal data — because it is.</p>
+<h2>Weigh it sensibly</h2>
+<p>A reference is one input, not a verdict. A single lukewarm comment need not sink a strong candidate, and a glowing reference does not excuse ignoring red flags from the interview. Use references to confirm or question what you already saw — then make a considered decision.</p>
+`.trim(),
+  },
+
+  {
+    title: 'Making the Job Offer: Getting Your Offer Letter Right',
+    author: AUTHOR,
+    imageQuery: 'signing job offer letter handshake',
+    shortDescription:
+      'The offer stage is where a great hiring process can quietly fall apart. How to make an offer that is clear, competitive and legally sound — and turns a yes into a signature.',
+    body: `
+<p>You have found the right person. Now comes a step that many small businesses rush or bungle: the offer. A vague verbal "we'd love to have you" followed by a scramble over terms can lose a good candidate or, worse, create a dispute before day one. A clear, well-made offer closes the gap between "yes" and a signed start.</p>
+<h2>Make the offer clearly</h2>
+<p>Once you have decided, move promptly — good candidates have other options. Make the offer warmly, then follow it immediately with a written offer letter so nothing rests on memory. Speed and clarity here signal that you are organised and serious.</p>
+<h2>What the offer letter should state</h2>
+<ul>
+  <li><strong>Job title and start date.</strong></li>
+  <li><strong>Gross salary and pay frequency</strong>, plus any allowances or benefits.</li>
+  <li><strong>Place and hours of work</strong>, including whether the role is on-site, remote or hybrid.</li>
+  <li><strong>Probation period</strong> and its length.</li>
+  <li><strong>Any conditions</strong> — for example satisfactory references or required documents.</li>
+  <li><strong>A clear acceptance step</strong> — how and by when to confirm.</li>
+</ul>
+<blockquote>Be explicit that the salary is gross and that statutory deductions apply. The "but I thought that was my take-home" conversation is entirely avoidable.</blockquote>
+<h2>Avoid the common traps</h2>
+<p>Confusing gross and net pay is the classic one — state gross and note that PAYE, SHIF, NSSF and the Housing Levy are deducted. Do not make promises verbally that are not in the letter. And make sure the offer letter and the eventual contract agree with each other, so you are not signing two documents that say different things.</p>
+<h2>From offer to contract</h2>
+<p>The offer letter opens the door; the employment contract is the full agreement. Have the signed contract ready for the start date, consistent with the offer. Handling this stage crisply leaves the new hire's very first impression of you as an organised, trustworthy employer — exactly the note you want to start on.</p>
+`.trim(),
+  },
+
+  {
+    title: 'Handling Resignations and Running Useful Exit Interviews',
+    author: AUTHOR,
+    imageQuery: 'employee leaving office farewell desk',
+    shortDescription:
+      'How you handle someone leaving says as much about your business as how you hired them. A calm, professional approach to resignations — and how to learn from every departure.',
+    body: `
+<p>Someone has handed in their notice. It is easy to take a resignation personally, or to disengage from a person who is on their way out. Both reactions cost you. How you handle a departure shapes what your remaining team believes about the business — and whether the leaver becomes an advocate or a critic.</p>
+<h2>Respond professionally</h2>
+<p>Acknowledge the resignation graciously, in writing, confirming the last working day based on the notice period in their contract. Resist any urge to react with hurt or pressure. People leave for all sorts of reasons, most of them not about you, and a calm response protects the relationship and your reputation.</p>
+<h2>Serve the notice period well</h2>
+<ul>
+  <li><strong>Plan the handover</strong> — document key tasks, contacts and passwords before they go.</li>
+  <li><strong>Keep them engaged</strong> — a leaver treated with respect usually finishes strong.</li>
+  <li><strong>Settle the final pay correctly</strong> — outstanding salary, any accrued leave owed, and proper statutory deductions.</li>
+  <li><strong>Recover company property</strong> and revoke access on the last day.</li>
+</ul>
+<blockquote>The person leaving today talks to the people you will want to hire tomorrow. Send them off well.</blockquote>
+<h2>Run an honest exit interview</h2>
+<p>A departing employee has little reason to hold back, which makes the exit interview a rare source of candid feedback. Ask what worked, what frustrated them, why they are really leaving, and what would have made them stay. Listen without defending. One resignation is a data point; a pattern across several exits is a warning you should act on.</p>
+<h2>Part on good terms</h2>
+<p>Wish them well, keep the door open, and mean it. In a small market, former employees become referrers, returning hires and ambassadors for your business. The goodwill you show on the way out often pays back in ways you never see coming.</p>
+`.trim(),
+  },
+
+  {
+    title: 'Training and Developing Your Team on a Small Budget',
+    author: AUTHOR,
+    imageQuery: 'team training workshop learning office',
+    shortDescription:
+      'You do not need a big training budget to grow your people — you need intention. Practical, low-cost ways for a small business to build skills and keep good staff learning.',
+    body: `
+<p>Ask employees what would make them stay and grow, and "the chance to develop" comes up again and again. Many small business owners assume that means expensive courses they cannot afford, and so do nothing. In reality, most development happens on the job, and the biggest lever you have is intention, not budget.</p>
+<h2>Most learning is not a course</h2>
+<p>People grow fastest by doing slightly stretching work with support. Delegating a new responsibility, letting someone lead a small project, or pairing a junior with an experienced colleague develops skills at almost no cost. The key is to be deliberate about it rather than leaving growth to chance.</p>
+<h2>Low-cost ways to build skills</h2>
+<ul>
+  <li><strong>On-the-job stretch</strong> — assign tasks just beyond someone's current comfort, then coach.</li>
+  <li><strong>Internal knowledge-sharing</strong> — have people teach each other what they know best.</li>
+  <li><strong>Mentoring</strong> — pair less experienced staff with stronger colleagues.</li>
+  <li><strong>Free and low-cost resources</strong> — reputable online courses, industry webinars and reading.</li>
+  <li><strong>Cross-training</strong> — teaching people each other's roles, which also protects you when someone is away.</li>
+</ul>
+<blockquote>You are developing your people whether you mean to or not. The only choice is whether you do it on purpose.</blockquote>
+<h2>Make it intentional</h2>
+<p>Use your one-on-ones to ask each person where they want to grow, then agree one concrete development step at a time. A simple, living note of who is working on what turns vague good intentions into real progress.</p>
+<h2>The return on a small investment</h2>
+<p>Developing people improves the work, builds loyalty and prepares your team for the responsibilities a growing business will need to hand them. It is one of the highest-return, lowest-cost things a small employer can do — and one of the most visible signs to your team that you are invested in them.</p>
+`.trim(),
+  },
+
+  {
+    title: 'Managing Grievances: Giving Every Employee a Fair Hearing',
+    author: AUTHOR,
+    imageQuery: 'serious workplace meeting listening',
+    shortDescription:
+      'When an employee has a genuine complaint, how you handle it defines your workplace. A simple, fair grievance process that resolves problems before they become disputes or resignations.',
+    body: `
+<p>Sooner or later an employee will raise a genuine complaint — about treatment, workload, pay, a colleague or a manager. How your business responds at that moment tells everyone whether concerns are taken seriously or quietly buried. A fair, predictable grievance process turns potential resentment into resolution.</p>
+<h2>Why a process matters</h2>
+<p>Without a route to raise concerns, problems do not disappear — they fester, spread and eventually surface as a resignation or a formal dispute. A clear grievance procedure gives people a legitimate way to be heard, and gives you the chance to fix issues while they are still small.</p>
+<h2>A simple grievance procedure</h2>
+<ul>
+  <li><strong>A clear way to raise it</strong> — who to go to, and an alternative if the complaint concerns that person.</li>
+  <li><strong>A prompt, genuine hearing</strong> — listen properly, without rushing to defend.</li>
+  <li><strong>A fair look at the facts</strong> — gather the relevant information and hear other sides where needed.</li>
+  <li><strong>A decision and explanation</strong> — tell the employee the outcome and the reasoning.</li>
+  <li><strong>A route to escalate</strong> — where possible, a way to have the matter reviewed if they remain unhappy.</li>
+</ul>
+<blockquote>People can accept a decision that does not go their way. What they cannot forgive is the feeling that no one really listened.</blockquote>
+<h2>Handle it with care</h2>
+<p>Treat grievances confidentially and take them seriously, even ones that seem minor to you — they rarely feel minor to the person raising them. Keep a simple record of the complaint, the steps you took and the outcome. As with all HR matters, good records protect both the employee and the business.</p>
+<h2>The goal is resolution, not winning</h2>
+<p>Approach a grievance as a problem to solve, not an argument to win. Employees who feel heard and fairly treated usually stay and re-engage, even when the answer is no. A workplace known for handling concerns fairly is one people trust — and trust is what keeps good people from walking out the door.</p>
+`.trim(),
+  },
+
+  {
+    title: "Data Protection and Employee Privacy Under Kenya's Data Protection Act",
+    author: AUTHOR,
+    imageQuery: 'data privacy security laptop lock',
+    shortDescription:
+      'Every employer holds sensitive personal data about its staff — and now has legal duties over it. A plain guide to handling employee data responsibly under the Data Protection Act, 2019.',
+    body: `
+<p>To run payroll and manage staff, every employer collects a surprising amount of sensitive information: identity documents, financial details, health information, next-of-kin records. Kenya's Data Protection Act, 2019 turns handling that information carefully from good manners into a legal duty — and a small business is not exempt.</p>
+<h2>What the law expects</h2>
+<p>The Act sets out principles for handling personal data: collect it lawfully and for a clear purpose, use it only for that purpose, keep it accurate, hold only what you need, keep it secure, and retain it no longer than necessary. In short, treat the personal data of your employees the way you would want your own handled.</p>
+<h2>Practical steps for a small business</h2>
+<ul>
+  <li><strong>Collect only what you need</strong> — resist gathering information "just in case".</li>
+  <li><strong>Be transparent</strong> — tell staff what data you hold and why.</li>
+  <li><strong>Keep it secure</strong> — limit access to those who genuinely need it, and protect both digital and paper records.</li>
+  <li><strong>Keep it accurate and current</strong> — update details as they change.</li>
+  <li><strong>Do not over-retain</strong> — dispose of data safely once you no longer need it.</li>
+</ul>
+<blockquote>Ask of every piece of employee data you hold: do I actually need this, is it safe, and would the employee be comfortable knowing how I keep it?</blockquote>
+<h2>Respect employees' rights</h2>
+<p>The Act gives individuals rights over their own data, including to know what you hold and to have inaccuracies corrected. Be ready to respond reasonably if an employee asks. Handling such requests openly builds trust; brushing them off invites both complaints and regulatory risk.</p>
+<h2>Build good habits now</h2>
+<p>You do not need an elaborate compliance department. Store employee files securely, control who can see them, be honest about what you collect, and clear out what you no longer need. These simple habits keep you on the right side of the law and show your team that you take their privacy — and their trust — seriously.</p>
+`.trim(),
+  },
+
+  {
+    title: 'Managing Absenteeism and Timekeeping Without the Drama',
+    author: AUTHOR,
+    imageQuery: 'empty office desk clock time',
+    shortDescription:
+      'Persistent lateness and absence quietly drain a small team — but heavy-handed reactions make it worse. How to manage attendance fairly, firmly and without poisoning the atmosphere.',
+    body: `
+<p>In a small team, one person's persistent lateness or unexplained absence is felt by everyone. Work piles onto colleagues, resentment builds, and the owner is left wondering whether to ignore it or come down hard. Both extremes cause harm. Managing attendance well is about clear expectations applied with fairness — not surveillance or confrontation.</p>
+<h2>Set the expectation clearly</h2>
+<p>People cannot meet a standard they were never told. Your handbook and contracts should state working hours, how to report an absence, how much notice is expected, and when a medical certificate is needed. Most attendance problems begin as fuzzy expectations, not bad faith.</p>
+<h2>Distinguish the causes</h2>
+<blockquote>Before you treat lateness as a discipline problem, find out whether it is a life problem. The response to a struggling employee is different from the response to a careless one.</blockquote>
+<p>Genuine illness, a caring responsibility or a transport crisis calls for support and flexibility. A pattern of unexplained lateness or absence, once expectations are clear, calls for a straightforward conversation. Knowing which you are dealing with keeps you from being unfair — or being a pushover.</p>
+<h2>Have the conversation early</h2>
+<p>Do not let it slide for months and then explode. Raise it privately and calmly: describe what you have noticed, ask if everything is alright, and remind them of the expectation. Often a quiet early word solves it. If it continues, follow your normal, fair disciplinary process — with a record of the steps taken.</p>
+<h2>Track it fairly</h2>
+<p>Keep a simple, accurate record of attendance so you are responding to facts, not impressions, and so you treat everyone consistently. Consistency is what protects you: the moment people sense that the rules apply to some and not others, the whole team's discipline erodes.</p>
+<h2>Protect the willing majority</h2>
+<p>Remember who you are really managing this for: the reliable people carrying the extra load. Addressing attendance problems fairly and promptly is not about punishing one person — it is about being fair to everyone who shows up and does their part.</p>
+`.trim(),
+  },
+
+  {
+    title: 'Succession Planning: Not Letting Your Business Depend on One Person',
+    author: AUTHOR,
+    imageQuery: 'business team handover planning meeting',
+    shortDescription:
+      'If one resignation or absence could cripple your business, you have a hidden risk. Simple succession planning for small businesses — so no single person is irreplaceable.',
+    body: `
+<p>Ask yourself an uncomfortable question: if your most important employee resigned tomorrow — or simply fell ill for a month — what would break? In many small businesses the honest answer is "quite a lot". When critical knowledge and relationships live inside one person's head, that person becomes a single point of failure. Succession planning is how you quietly remove that risk.</p>
+<h2>Why small businesses especially need it</h2>
+<p>Large organisations have depth; small ones often do not. One employee may be the only person who knows the payroll process, holds the key client relationships, or understands how a core system works. That concentration feels efficient until the day that person is unavailable — and then it is a crisis.</p>
+<h2>Spot your key dependencies</h2>
+<ul>
+  <li><strong>Map critical roles and knowledge</strong> — who holds information or relationships no one else does?</li>
+  <li><strong>Identify single points of failure</strong> — tasks only one person can perform.</li>
+  <li><strong>Note the highest-impact departures</strong> — where a resignation would hurt most.</li>
+</ul>
+<blockquote>You are not planning for people to leave. You are making sure that when they do — and eventually they will — the business does not go with them.</blockquote>
+<h2>Reduce the dependency</h2>
+<p>You do not need a formal corporate programme. Cross-train people so more than one person can do critical tasks. Insist that key processes are documented, not just remembered. Share important client relationships across more than one contact. And develop your people so someone is always growing toward the next level of responsibility.</p>
+<h2>Make it an ongoing habit</h2>
+<p>Succession planning is not a one-off exercise; it is a mindset. Whenever knowledge or a relationship starts to concentrate in one person, spread it a little. Done steadily, this makes your business more resilient, less stressful to run, and far more attractive to anyone who might one day buy or invest in it.</p>
+`.trim(),
+  },
+
+  {
+    title: 'Handling Underperformance With a Fair Improvement Plan',
+    author: AUTHOR,
+    imageQuery: 'manager coaching employee feedback desk',
+    shortDescription:
+      'Underperformance handled badly ends in resentment or an unfair dismissal claim. A calm, fair way to address it — the improvement conversation and plan that gives people a real chance to succeed.',
+    body: `
+<p>One of the hardest parts of managing people is dealing with someone who is not performing. Avoid it and the problem grows, dragging down the team and your patience. Handle it clumsily and you risk resentment, a demotivated employee, or an unfair dismissal claim. The answer is a fair, structured approach that gives the person a genuine chance to improve.</p>
+<h2>Start by understanding why</h2>
+<p>Before treating underperformance as a failing, find the cause. Is the person unclear on what is expected? Under-trained? Lacking a tool or support? Dealing with something personal? Each of these has a different remedy, and a surprising amount of "poor performance" turns out to be a fixable gap rather than a bad attitude.</p>
+<h2>Have an honest, respectful conversation</h2>
+<blockquote>People cannot fix a problem they have not clearly heard about. Vague hints are not feedback — and they are not fair.</blockquote>
+<p>Address it privately and directly. Describe the specific gap between what is happening and what is needed, using concrete examples rather than character judgements. Then listen — the explanation often reveals the real issue and the way forward.</p>
+<h2>Agree a clear improvement plan</h2>
+<ul>
+  <li><strong>Specific expectations</strong> — what "good" looks like, concretely.</li>
+  <li><strong>Support</strong> — the training, tools or guidance you will provide.</li>
+  <li><strong>A reasonable timeframe</strong> — enough time to show real change.</li>
+  <li><strong>Follow-up</strong> — regular check-ins to review progress together.</li>
+</ul>
+<h2>Follow through fairly</h2>
+<p>Keep a record of the conversations, the plan and the support offered. If the person improves, acknowledge it — that is the outcome you wanted. If, despite a fair chance and genuine support, performance does not improve, you can move to your normal process on solid ground, having acted reasonably throughout. Either way, you will know you gave them a real opportunity — and so will the rest of your team, who are always watching how you treat people.</p>
+`.trim(),
+  },
 ];
 
 module.exports = { articles, AUTHOR };
